@@ -4,7 +4,9 @@
   # Basic User Info
   home.username = "shyam";
   home.homeDirectory = "/home/shyam";
-
+  # Allow unfree packages in Home Manager context
+  nixpkgs.config.allowUnfree = true;
+  
   # --- User Packages (The "Apps") ---
   home.packages = with pkgs; [
     # Communication & Social
@@ -31,8 +33,7 @@
     userEmail = "you@example.com";
   };
 
-  # Allow unfree packages in Home Manager context
-  nixpkgs.config.allowUnfree = true;
+
 
   # This version typically matches your system version
   home.stateVersion = "24.11";
