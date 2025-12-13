@@ -26,16 +26,7 @@
   hardware.enableAllFirmware = true;
   # 4. Blacklist the old, conflicting AMD driver
   boot.blacklistedKernelModules = [ "radeon" ];
-  
-  # 5. Enable the newest Mesa and Vulkan packages (user-space drivers)
-  hardware.opengl = {
-    enable = true;
-    extraPackages = with pkgs-unstable; [
-      amdvlk # Latest AMD Vulkan driver
-      mesa.drivers # Latest Mesa (OpenGL/Vulkan)
-    ];
-  };
-  
+   
   # --- Networking ---
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
