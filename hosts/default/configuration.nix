@@ -65,7 +65,6 @@
   environment.systemPackages = with pkgs; [
     vim
     wget
-    programs.firefox # Firefox is often better as a system package for policies
   ];
   
   programs.firefox.enable = true;
