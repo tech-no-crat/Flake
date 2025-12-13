@@ -13,6 +13,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelPackages = pkgs-unstable.linuxPackages_latest;
   #boot.kernelParams = [ 
   #  "video=DP-1:2560x1440@144"
   #  "video=DP-2:2560x1440@144"
@@ -22,7 +23,19 @@
   hardware.enableRedistributableFirmware = true;
   hardware.uinput.enable = true;
   hardware.graphics.enable = true; 
-
+  hardware.enableAllFirmware = true;
+  # 4. Blacklist the old, conflicting AMD driver
+  boot.blacklistedKernelModules = [ "radeon" ];
+  
+  # 5. Enable the newest Mesa and Vulkan packages (user-space drivers)
+  hardware.opengl = {
+    enable = true;
+    extraPackages = with pkgs-unstable; [
+      amdvlk # Latest AMD Vulkan driver
+      mesa.drivers # Latest Mesa (OpenGL/Vulkan)
+    ];
+  };
+  
   # --- Networking ---
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
