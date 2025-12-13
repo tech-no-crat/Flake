@@ -29,8 +29,8 @@
   # Example: Managing Git via Home Manager (Optional but cleaner)
   programs.git = {
     enable = true;
-    userName = "Your Name";
-    userEmail = "you@example.com";
+    userName = "Shyam";
+    userEmail = "shuklashyam@outlook.com";
   };
 
 
