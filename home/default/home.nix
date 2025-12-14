@@ -24,6 +24,9 @@
     # Utilities
     ethtool
     iw
+    
+    #Cloud Sync
+    nextcloud-client
   ];
 
   # Example: Managing Git via Home Manager (Optional but cleaner)
