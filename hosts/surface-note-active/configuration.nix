@@ -11,7 +11,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "surface-note-active";
 
-  hardware.graphics.extraPackages = with pkgs; [ vaapiIntel intel-media-driver ]
+  hardware.graphics.extraPackages = with pkgs; [ vaapiIntel intel-media-driver ];
 
   # If using Wayland (e.g., Sway, Hyprland), you might need this:
   environment.sessionVariables.NIXOS_OZONE_WL = "1";  
