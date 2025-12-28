@@ -42,7 +42,7 @@
       };
 
       # --- NEW: Your Surface Laptop ---
-      surface-note-active = nixpkgs.lib.nixosSystem {
+      surface-book-active = nixpkgs.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs pkgs-unstable; };
         modules = [
@@ -50,7 +50,7 @@
           nixos-hardware.nixosModules.microsoft-surface-common
 
           # 2. System Configuration
-          ./hosts/surface-note-active/configuration.nix
+          ./hosts/surface-book-active/configuration.nix
 
           # 3. Home Manager
           home-manager.nixosModules.home-manager
@@ -58,7 +58,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs pkgs-unstable; };
-            home-manager.users.shyam = import ./home/surface-note-active/home.nix;
+            home-manager.users.shyam = import ./home/surface-book-active/home.nix;
           }
         ];
       };

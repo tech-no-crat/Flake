@@ -9,7 +9,7 @@
   # --- Boot & Hardware ---
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  networking.hostName = "surface-note-active";
+  networking.hostName = "surface-book-active";
   
   # --- Networking ---
   networking.networkmanager.enable = true;
@@ -75,7 +75,7 @@
 
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
+  nix.settings.trusted-users = [ "root" "shyam"];
   environment.systemPackages = with pkgs; [
     vim
     wget
