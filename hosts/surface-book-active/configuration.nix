@@ -41,7 +41,8 @@
   # --- Services ---
   services.printing.enable = true;
   services.tailscale.enable = true;
-  
+  services.openssh.enable = true;
+
   # Docker (Virtualization)
   virtualisation.docker.enable = true;
 
