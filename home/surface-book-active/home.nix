@@ -14,7 +14,7 @@
     pkgs._1password-cli
     
     # Explicitly from unstable
-    pkgs-unstable.heroic-launcher
+    pkgs-unstable.heroic
   ];
   # Allow unfree packages (just in case)
   nixpkgs.config.allowUnfree = true;
