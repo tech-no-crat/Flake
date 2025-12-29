@@ -19,9 +19,11 @@
     #n8n
     
     # CLI Tools
-    _1password-cli 
-  ];
-
+    _1password-cli
+    
+  ]; ++ (with pkgs-unstable; [
+    heroic-launcher
+  ]);
   # Allow unfree packages (just in case)
   nixpkgs.config.allowUnfree = true;
 
