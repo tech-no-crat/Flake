@@ -10,7 +10,19 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "surface-book-active";
-  
+  boot.kernelPatches = [
+  {
+    name = "rust-target-fix";
+    patch = null;
+    extraConfig = "";
+    patchPhase = ''
+      # Fix the rust target generation script to use integer width instead of string
+      # (Required for newer rustc versions in NixOS 25.11)
+      sed -i 's/ts.push("target-pointer-width", "64");/ts.push("target-pointer-width", 64);/' scripts/generate_rust_target.rs
+      sed -i 's/ts.push("target-pointer-width", "32");/ts.push("target-pointer-width", 32);/' scripts/generate_rust_target.rs
+    '';
+  }
+  ];
   # --- Networking ---
   networking.networkmanager.enable = true;
   time.timeZone = "America/New_York";
