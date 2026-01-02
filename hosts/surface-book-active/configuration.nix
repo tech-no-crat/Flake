@@ -9,10 +9,6 @@
   # --- Boot & Hardware ---
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPatches = [{
-      name = "rust-1.91-fix";
-      patch = ../hacks/rust-fix.patch;
-  }];
   networking.hostName = "surface-book-active";
   
   # --- Networking ---
