@@ -33,7 +33,6 @@
           ./hosts/default/configuration.nix
           home-manager.nixosModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs pkgs-unstable; };
             home-manager.users.shyam = import ./home/default/home.nix;
@@ -55,7 +54,6 @@
           # 3. Home Manager
           home-manager.nixosModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs pkgs-unstable; };
             home-manager.users.shyam = import ./home/surface-book-active/home.nix;
@@ -75,7 +73,6 @@
           # 3. Home Manager
           home-manager.nixosModules.home-manager
           {
-            home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs pkgs-unstable; };
             home-manager.users.shyam = import ./home/surface-book-passive/home.nix;

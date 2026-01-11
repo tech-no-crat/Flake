@@ -24,10 +24,10 @@ home.packages = [
   ];
 
   # Example: Managing Git via Home Manager (Optional but cleaner)
-  programs.git = {
-    enable = true;
-    userName = "Shyam";
-    userEmail = "shuklashyam@outlook.com";
+  programs.git.enable = true;
+  programs.git.settings = {
+    user.name = "Shyam";
+    user.email = "shuklashyam@outlook.com";
   };
 
 
