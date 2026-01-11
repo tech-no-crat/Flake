@@ -45,13 +45,13 @@
   services.xserver = {
     enable = true;
     videoDrivers = [ "amdgpu" ];
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
     xkb = {
       layout = "us";
       variant = "";
     };
   };
+  services.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "shyam";
 
@@ -87,5 +87,13 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
   nix.settings.trusted-users = [ "root" "shyam"];
+  
+  #Garbage Collection
+  nix.gc = {
+  automatic = true; # Enable automatic GC service
+  dates = "weekly"; # Schedule runs (e.g., "03:15", "daily", "weekly")
+  options = "--delete-older-than 30d"; # Delete unreferenced paths older than 30 days
+  };
+
   system.stateVersion = "25.05";
 }
