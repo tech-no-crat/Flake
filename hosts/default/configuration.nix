@@ -40,7 +40,8 @@
   # --- Services ---
   services.openssh.enable = true;
   services.tailscale.enable = true;
-  
+  services.resolved.enable = true;
+  networking.useNetworkd = false;
   # --- Desktop ---
   services.xserver = {
     enable = true;
