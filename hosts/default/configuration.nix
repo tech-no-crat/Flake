@@ -12,6 +12,14 @@
   # --- Boot & Hardware ---
   hardware.graphics.enable = true;
   hardware.graphics.enable32Bit = true;
+  hardware.graphics.extraPackages = with pkgs; [
+    amdvlk
+  ];
+  # For 32 bit applications 
+  hardware.graphics.extraPackages32 = with pkgs; [
+    driversi686Linux.amdvlk
+  ];
+  
   hardware.enableRedistributableFirmware = true;
   hardware.uinput.enable = true;
   
@@ -23,6 +31,7 @@
     "video=DP-2:2560x1440@144"
     "amdgpu.vm_fragment_size=9"
     ];
+  
   boot.kernelModules = [ "iwlwifi" ]; 
   boot.blacklistedKernelModules = [ "radeon" ];
    
@@ -55,7 +64,8 @@
   services.displayManager.gdm.enable = true;
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "shyam";
-
+  services.lact.enable = true;
+  
   # --- Audio & Printing ---
   services.printing.enable = true;
   services.printing.drivers = [ 
