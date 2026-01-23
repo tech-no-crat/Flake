@@ -10,13 +10,6 @@
     ];
 
   # --- Boot & Hardware ---
-  hardware.graphics.enable = true;
-  hardware.graphics.enable32Bit = true;  
-  hardware.enableRedistributableFirmware = true;
-  hardware.uinput.enable = true;
-  hardware.opengl = {
-    enable = true;
-  };
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.kernelModules = [ "amdgpu" ];
@@ -28,7 +21,16 @@
   
   boot.kernelModules = [ "iwlwifi" ]; 
   boot.blacklistedKernelModules = [ "radeon" ];
-   
+  boot.extraModprobeConfig = "options amdgpu ppfeaturemask=0xffffffff\n";
+
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+    extraPackages = with pkgs; [
+      rocmPackages.clr.icd
+      libva
+    ];
+  };
   # --- Networking ---
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
