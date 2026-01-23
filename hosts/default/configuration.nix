@@ -16,7 +16,6 @@
   hardware.uinput.enable = true;
   hardware.opengl = {
     enable = true;
-    driSupport = true;
   };
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
