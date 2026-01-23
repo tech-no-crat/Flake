@@ -89,7 +89,7 @@
     wget
     
     ## Tools ##
-    glxinfo # OpenGL info
+    mesa-demos # OpenGL info
     vulkan-tools # Khronos official Vulkan Tools and Utilities
     clinfo # Print information about available OpenCL platforms and devices
     libva-utils # Collection of utilities and examples for VA-API
