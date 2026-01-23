@@ -11,18 +11,13 @@
 
   # --- Boot & Hardware ---
   hardware.graphics.enable = true;
-  hardware.graphics.enable32Bit = true;
-  hardware.graphics.extraPackages = with pkgs; [
-    amdvlk
-  ];
-  # For 32 bit applications 
-  hardware.graphics.extraPackages32 = with pkgs; [
-    driversi686Linux.amdvlk
-  ];
-  
+  hardware.graphics.enable32Bit = true;  
   hardware.enableRedistributableFirmware = true;
   hardware.uinput.enable = true;
-  
+  hardware.opengl = {
+    enable = true;
+    driSupport = true;
+  };
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.kernelModules = [ "amdgpu" ];
@@ -65,7 +60,7 @@
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "shyam";
   services.lact.enable = true;
-  
+
   # --- Audio & Printing ---
   services.printing.enable = true;
   services.printing.drivers = [ 
