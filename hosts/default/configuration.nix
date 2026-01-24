@@ -18,6 +18,7 @@
     "video=DP-2:2560x1440@144"
     "amdgpu.vm_fragment_size=9"
     ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModprobeConfig = "options amdgpu ppfeaturemask=0xffffffff\n";
   boot.kernel.sysctl = {
   # Default is often 25 (25% of CPU). Setting to 50 allows more time.
