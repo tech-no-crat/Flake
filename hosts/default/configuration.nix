@@ -18,10 +18,11 @@
     "video=DP-2:2560x1440@144"
     "amdgpu.vm_fragment_size=9"
     ];
-  
-  boot.kernelModules = [ "iwlwifi" ]; 
-  boot.blacklistedKernelModules = [ "radeon" ];
   boot.extraModprobeConfig = "options amdgpu ppfeaturemask=0xffffffff\n";
+  boot.kernel.sysctl = {
+  # Default is often 25 (25% of CPU). Setting to 50 allows more time.
+  "kernel.perf_cpu_time_max_percent" = 50;
+  };
 
   hardware.graphics = {
     enable = true;
@@ -87,7 +88,6 @@
   environment.systemPackages = with pkgs; [
     vim
     wget
-    
     ## Tools ##
     mesa-demos # OpenGL info
     vulkan-tools # Khronos official Vulkan Tools and Utilities
@@ -98,10 +98,16 @@
     lact # Linux GPU Configuration Tool for AMD and NVIDIA
     amdgpu_top # Tool to display AMDGPU usage
     nvtopPackages.amd # (h)top like task monitor for AMD, Adreno, Intel and NVIDIA GPUs
+    htop
+    btop
+    powertop
+    lm_sensors
+
+    
   ];
   
   programs.firefox.enable = true;
-
+  programs.direnv.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
   nix.settings.trusted-users = [ "root" "shyam"];

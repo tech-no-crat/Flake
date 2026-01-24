@@ -24,6 +24,7 @@ home.packages = [
   ];
 
   # Example: Managing Git via Home Manager (Optional but cleaner)
+  programs.direnv.enable = true;
   programs.git.enable = true;
   programs.git.settings = {
     user.name = "Shyam";
