@@ -23,6 +23,7 @@
   boot.kernel.sysctl = {
   # Default is often 25 (25% of CPU). Setting to 50 allows more time.
   "kernel.perf_cpu_time_max_percent" = 50;
+  "vm.max_map_count" = 2147483642;
   };
 
   hardware.graphics = {
