@@ -17,14 +17,17 @@
     # Heroic (Unstable) with overrides for integration
     (pkgs-unstable.heroic.override {
       extraPkgs = p: [ p.gamescope p.mangohud p.gamemode ];
-    })
+    }
+    pkgs-unstable.wineWowPackages.stable # Essential for 32-bit & 64-bit games
+    pkgs-unstable.winetricks
+    pkgs-unstable.protonup-qt     # To download GE-Proton for Heroic/Steam
+    pkgs-unstable.nexusmods-app
+    pkgs-unstable.protontricks
+    
+    )
     
     # Wine & Support Tools
-    pkgs.wineWowPackages.stable # Essential for 32-bit & 64-bit games
-    pkgs.winetricks
-    pkgs-unstable.protonup-qt     # To download GE-Proton for Heroic/Steam
-    pkgs.nexusmods-app
-    pkgs.protontricks
+
   ];
 
   # 4. Critical Graphics Settings
