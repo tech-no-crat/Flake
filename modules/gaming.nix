@@ -24,6 +24,7 @@
     pkgs.winetricks
     pkgs-unstable.protonup-qt     # To download GE-Proton for Heroic/Steam
     pkgs.nexusmods-app
+    pkgs.protontricks
   ];
 
   # 4. Critical Graphics Settings
@@ -31,4 +32,7 @@
     enable = true;
     enable32Bit = true; # Required for many older/unstable games and Steam
   };
+  nixpkgs.config.permittedInsecurePackages = [
+   "nexusmods-app-0.21.1"
+   ];
 }
