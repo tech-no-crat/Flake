@@ -23,6 +23,7 @@
     pkgs.wineWowPackages.stable # Essential for 32-bit & 64-bit games
     pkgs.winetricks
     pkgs-unstable.protonup-qt     # To download GE-Proton for Heroic/Steam
+    pkgs.nexusmods-app
   ];
 
   # 4. Critical Graphics Settings
