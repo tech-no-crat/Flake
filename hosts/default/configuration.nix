@@ -6,6 +6,7 @@
       ./hardware-configuration.nix # Copy this from /etc/nixos/
       ../../modules/sunshine.nix   # Relative path to your modules
       ../../modules/gaming.nix
+      ../../modules/multimedia.nix
       ../../modules/1password.nix
     ];
 
@@ -81,7 +82,7 @@
   users.users.shyam = {
     isNormalUser = true;
     description = "shyam";
-    extraGroups = [ "networkmanager" "wheel" "uinput" "input" ];
+    extraGroups = [ "networkmanager" "wheel" "uinput" "input" "video" ];
     # Notice: No 'packages' list here! They are all in home.nix now.
   };
 
