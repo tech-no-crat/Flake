@@ -6,7 +6,7 @@
   environment.systemPackages = [
     # Video Editing
     pkgs.davinci-resolve       # Professional color & editing
-    pkgs.kdenlive              # Great "daily driver" for quick H.264 edits
+    pkgs.kdePackages.kdenlive              # Great "daily driver" for quick H.264 edits
     
     # OBS Studio (Wrapped with essential plugins)
     (pkgs.wrapOBS {
