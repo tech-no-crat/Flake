@@ -28,7 +28,7 @@
     pkgs.tenacity              # A modern, privacy-respecting fork of Audacity
     
     # Utilities & Downloader
-    pkgs-unstable.yt-dlp       # Essential for content research/grabbing clips
+    pkgs.yt-dlp       # Essential for content research/grabbing clips
     pkgs.handbrake             # Best tool for transcoding and compressing video
     pkgs.ffmpeg_7-full         # The "Swiss Army Knife" of media (Full version with codecs)
   ];
