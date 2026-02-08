@@ -16,6 +16,7 @@
     extraPackages = with pkgs; [
       intel-media-driver
       vaapiIntel
+      ]
   };
 
   # Load nvidia driver for Xorg and Wayland
