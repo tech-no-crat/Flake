@@ -10,7 +10,6 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "surface-book-active";
-  hardware.microsoft-surface.kernelVersion = “stable”;
   
   hardware.graphics = {
     enable = true;
