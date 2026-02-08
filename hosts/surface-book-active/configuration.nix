@@ -13,10 +13,13 @@
   
   hardware.graphics = {
     enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      vaapiIntel
   };
 
   # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = ["intel" "nvidia"];
   
   hardware.nvidia = {
     # Modesetting is required
