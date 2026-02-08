@@ -11,6 +11,44 @@
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "surface-book-active";
   
+  hardware.graphics = {
+    enable = true;
+  };
+
+  # Load nvidia driver for Xorg and Wayland
+  services.xserver.videoDrivers = ["nvidia"];
+
+  hardware.nvidia = {
+    # Modesetting is required
+    modesetting.enable = true;
+    
+    # Enable the NVIDIA settings menu
+    nvidiaSettings = true;
+
+    # Use the open source kernel module (Turing+ GPUs)
+    open = true;
+
+    # Use stable driver
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+    # PRIME configuration
+    prime = {
+      # Use "offload" (recommended for laptops) or "sync"
+      offload = {
+        enable = true;
+        enableOffloadCmd = true;
+      };
+      
+      # !!! ADJUST THESE BUS IDs !!!
+      intelBusId = "PCI:0:2:0";
+      nvidiaBusId = "PCI:1:0:0";
+    };
+
+    # Power management (fine-grained is experimental, disable if it causes issues)
+    powerManagement.enable = false;
+    powerManagement.finegrained = false;
+  };
+}
   # --- Networking ---
   networking.networkmanager.enable = true;
   time.timeZone = "America/New_York";
