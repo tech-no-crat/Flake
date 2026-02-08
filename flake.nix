@@ -10,7 +10,9 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # --- NEW: Hardware support for Surface devices ---
-    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    #nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+    # Fix for 25.11
+    nixos-hardware.url = "github:8bitbuddhist/nixos-hardware?ref=surface-rust-target-spec-fix";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, ... }@inputs: 
