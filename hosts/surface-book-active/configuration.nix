@@ -7,7 +7,15 @@
     ];
 
   # --- Boot & Hardware ---
-  boot.kernelPackages = pkgs.linuxPackages_surface;
+  # This enables the patched linux-surface kernel (defaults to 'longterm')
+  # You can also set it to "stable" if preferred.
+  microsoft-surface.kernelVersion = "longterm";
+
+  # Enable touch support (Intel Precision Touch)
+  microsoft-surface.ipts.enable = true;
+
+  # Enable Surface-specific utilities (Performance modes, DTX for detaching the screen)
+  microsoft-surface.surface-control.enable = true;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "surface-book-active";
@@ -18,7 +26,7 @@
 
   # Load nvidia driver for Xorg and Wayland
   services.xserver.videoDrivers = ["nvidia"];
-
+  
   hardware.nvidia = {
     # Modesetting is required
     modesetting.enable = true;
