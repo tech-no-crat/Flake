@@ -48,7 +48,7 @@
         specialArgs = { inherit inputs pkgs-unstable; };
         modules = [
           # 1. Surface Hardware Module (Replaces <nixos-hardware/...>)
-          nixos-hardware.nixosModules.microsoft-surface-common
+          nixos-hardware.nixosModules.microsoft-surface
 
           # 2. System Configuration
           ./hosts/surface-book-active/configuration.nix
