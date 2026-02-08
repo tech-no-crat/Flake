@@ -12,7 +12,7 @@
     # --- NEW: Hardware support for Surface devices ---
     #nixos-hardware.url = "github:NixOS/nixos-hardware/master";
     # Fix for 25.11
-    nixos-hardware.url = "github:8bitbuddhist/nixos-hardware?ref=surface-rust-target-spec-fix";
+    nixos-hardware.url = "github:8bitbuddhist/nixos-hardware?ref=surface-kernel-6.18";
   };
 
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, ... }@inputs: 
@@ -48,7 +48,7 @@
         specialArgs = { inherit inputs pkgs-unstable; };
         modules = [
           # 1. Surface Hardware Module (Replaces <nixos-hardware/...>)
-          nixos-hardware.nixosModules.microsoft-surface
+          nixos-hardware.nixosModules.microsoft-surface-common
 
           # 2. System Configuration
           ./hosts/surface-book-active/configuration.nix
