@@ -48,7 +48,6 @@
     powerManagement.enable = false;
     powerManagement.finegrained = false;
   };
-}
   # --- Networking ---
   networking.networkmanager.enable = true;
   time.timeZone = "America/New_York";
