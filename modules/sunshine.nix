@@ -1,35 +1,17 @@
-{ config, pkgs, pkgs-unstable, lib, ... }:
+{ config, pkgs, pkgs-unstable, ... }:
 
-let
-  # 1. Define the pre-release package override
-  sunshine-pre = pkgs-unstable.sunshine.overrideAttrs (oldAttrs: rec {
-    version = "2026.214.30634";
-    src = pkgs.fetchFromGitHub {
-      owner = "LizardByte";
-      repo = "Sunshine";
-      rev = "v${version}";
-      # Use a fake hash first; Nix will error and provide the correct one
-      hash = lib.fakeHash; 
-      fetchSubmodules = true;
-    };
-
-    # Pre-releases often require an updated UI build hash. 
-    # If the build fails on 'npm', you may need to override this too:
-    # ui = oldAttrs.ui.overrideAttrs (_: {
-    #   npmDepsHash = lib.fakeHash;
-    # });
-  });
-in
 {
-  # 2. Tell the system and the service to use the new package
-  environment.systemPackages = [ sunshine-pre ];
-  
+  # 1. Install the package (from Unstable as requested)
+  environment.systemPackages = [
+    pkgs-unstable.sunshine
+  ];
+
+  # 2. Service Configuration
   services.sunshine = {
     enable = true;
-    package = sunshine-pre; # Critical: Ensures the service uses the pre-release
     autoStart = true;
     capSysAdmin = true;
-    openFirewall = true; 
+    openFirewall = true; # This automatically opens standard Sunshine ports
     applications = {
       apps = [
         {
@@ -45,10 +27,12 @@ in
       ];
     };
   };
-
-  # 3. Rest of your existing config
+  
+  # 3. Systemd wrapper (moved from your original config)
   systemd.services.sunshine.enable = true;
 
+  # 4. Manual Firewall Rules (Cleaned up from main config)
+  # Note: services.sunshine.openFirewall handles most, but we keep your explicit ranges here to be safe.
   networking.firewall = {
     allowedTCPPorts = [ 47984 47989 47990 48010 ];
     allowedUDPPortRanges = [
