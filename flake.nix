@@ -18,7 +18,10 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nixos-hardware, ... }@inputs: 
   let
     system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
+    pkgs = import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+    };
     
     # Define unstable pkgs
     pkgs-unstable = import nixpkgs-unstable {
