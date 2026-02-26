@@ -43,9 +43,9 @@
       };
 
       # --- NEW: Your Surface Laptop ---
-      surface-book-active = nixpkgs-unstable.lib.nixosSystem {
+      surface-book-active = nixpkgs.lib.nixosSystem {
         inherit system;
-        specialArgs = { inherit inputs pkgs-unstable; };
+        specialArgs = { inherit inputs pkgs; };
         modules = [
           # 1. Surface Hardware Module (Replaces <nixos-hardware/...>)
           nixos-hardware.nixosModules.microsoft-surface-common
@@ -57,7 +57,7 @@
           home-manager.nixosModules.home-manager
           {
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs pkgs-unstable; };
+            home-manager.extraSpecialArgs = { inherit inputs pkgs; };
             home-manager.users.shyam = import ./home/surface-book-active/home.nix;
           }
         ];
