@@ -86,7 +86,6 @@
   services.printing.enable = true;
   services.tailscale = {
   	enable = true;
-  	package = pkgs.unstable.tailscale;
   	};
   services.openssh.enable = true;
 
