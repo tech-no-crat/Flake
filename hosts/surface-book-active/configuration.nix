@@ -11,10 +11,13 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "surface-book-active";
+  hardware.microsoft-surface.kernelVersion = "stable";
+  microsoft-surface.ipts.enable = true;
+  config.microsoft-surface.surface-control.enable = true;
   
   hardware.graphics = {
     enable = true;
-    extraPackages = with pkgs; [
+    extraPackages = with pkgs-unstable; [
       intel-media-driver
       intel-vaapi-driver
       ];
@@ -72,13 +75,13 @@
   };
 
   # --- Desktop Environment ---
-  services.xserver = {
-    enable = true;
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
-    xkb.layout = "us";
-    xkb.variant = "";
-  };
+  #services.xserver = {
+   # enable = true;
+   # displayManager.gdm.enable = true;
+   # desktopManager.gnome.enable = true;
+   # xkb.layout = "us";
+   # xkb.variant = "";
+  #};
   # for >25.11
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
@@ -108,7 +111,7 @@
     isNormalUser = true;
     description = "Shyam Shukla";
     # Added "docker" group so you don't need sudo for docker commands
-    extraGroups = [ "networkmanager" "wheel" "docker" ]; 
+    extraGroups = [ "networkmanager" "wheel" "docker" "surface-control"]; 
   };
 
   # --- System Programs ---
