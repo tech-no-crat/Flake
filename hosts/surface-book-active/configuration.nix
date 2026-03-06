@@ -78,9 +78,9 @@
     xkb.layout = "us";
     xkb.variant = "";
   };
-# for >25.11
-#  services.displayManager.gdm.enable = true;
-#  services.desktopManager.gnome.enable = true;
+  # for >25.11
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
    
   # --- Services ---
   services.printing.enable = true;
