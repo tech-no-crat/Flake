@@ -8,7 +8,6 @@
 
   # --- Boot & Hardware ---
   boot.kernelPackages = with pkgs-unstable; [ 
-  	nvidiaPackages
   	linuxPackages_latest
   	];
   	
