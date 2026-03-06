@@ -46,7 +46,7 @@
       };
 
       # --- NEW: Your Surface Laptop ---
-      surface-book-active = nixpkgs.lib.nixosSystem {
+      surface-book-active = nixpkgs-unstable.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs pkgs-unstable; };
         modules = [
