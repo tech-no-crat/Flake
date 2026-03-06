@@ -7,6 +7,11 @@
     ];
 
   # --- Boot & Hardware ---
+  boot.kernelPackages =[ 
+  	pkgs.nvidiaPackages.stable
+  	pkgs.linuxPackages_latest
+  	]
+  ;
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "surface-book-active";
@@ -33,7 +38,7 @@
     open = true;
 
     # Use stable driver
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = nvidiaPackages.stable;
 
     # PRIME configuration
     prime = {
