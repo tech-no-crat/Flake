@@ -7,18 +7,18 @@
     ];
 
   # --- Boot & Hardware ---
-  boot.kernelPackages =[ 
-  	pkgs.nvidiaPackages.stable
-  	pkgs.linuxPackages_latest
-  	]
-  ;
+  boot.kernelPackages = with pkgs-unstable; [ 
+  	nvidiaPackages
+  	linuxPackages_latest
+  	];
+  	
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "surface-book-active";
   
   hardware.graphics = {
     enable = true;
-    extraPackages = with pkgs; [
+    extraPackages = with pkgs-unstable; [
       intel-media-driver
       intel-vaapi-driver
       ];
@@ -36,9 +36,6 @@
 
     # Use the open source kernel module (Turing+ GPUs)
     open = true;
-
-    # Use stable driver
-    package = nvidiaPackages.stable;
 
     # PRIME configuration
     prime = {
