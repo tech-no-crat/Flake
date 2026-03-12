@@ -7,16 +7,20 @@
     ];
 
   # --- Boot & Hardware ---
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "surface-book-active";
+  hardware.microsoft-surface.kernelVersion = "stable";
+  #microsoft-surface.ipts.enable = true;
+  #hardware.microsoft-surface.surface-control.enable = true;
   
   hardware.graphics = {
     enable = true;
-    extraPackages = with pkgs; [
+    extraPackages = with pkgs-unstable; [
       intel-media-driver
-      vaapiIntel
-      ]
+      intel-vaapi-driver
+      ];
   };
 
   # Load nvidia driver for Xorg and Wayland
@@ -78,13 +82,15 @@
     xkb.layout = "us";
     xkb.variant = "";
   };
-# for >25.11
-#  services.displayManager.gdm.enable = true;
-#  services.desktopManager.gnome.enable = true;
+  # for >25.11
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
    
   # --- Services ---
   services.printing.enable = true;
-  services.tailscale.enable = true;
+  services.tailscale = {
+  	enable = true;
+  	};
   services.openssh.enable = true;
 
   # Docker (Virtualization)
@@ -105,7 +111,7 @@
     isNormalUser = true;
     description = "Shyam Shukla";
     # Added "docker" group so you don't need sudo for docker commands
-    extraGroups = [ "networkmanager" "wheel" "docker" ]; 
+    extraGroups = [ "networkmanager" "wheel" "docker" "surface-control"]; 
   };
 
   # --- System Programs ---
