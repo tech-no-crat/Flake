@@ -13,7 +13,7 @@
   networking.hostName = "surface-book-active";
   hardware.microsoft-surface.kernelVersion = "stable";
   microsoft-surface.ipts.enable = true;
-  config.microsoft-surface.surface-control.enable = true;
+  microsoft-surface.surface-control.enable = true;
   
   hardware.graphics = {
     enable = true;
@@ -75,13 +75,13 @@
   };
 
   # --- Desktop Environment ---
-  #services.xserver = {
-   # enable = true;
-   # displayManager.gdm.enable = true;
-   # desktopManager.gnome.enable = true;
-   # xkb.layout = "us";
-   # xkb.variant = "";
-  #};
+  services.xserver = {
+    enable = true;
+    displayManager.gdm.enable = true;
+    desktopManager.gnome.enable = true;
+    xkb.layout = "us";
+    xkb.variant = "";
+  };
   # for >25.11
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
