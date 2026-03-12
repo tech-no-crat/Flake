@@ -13,7 +13,7 @@
   networking.hostName = "surface-book-active";
   hardware.microsoft-surface.kernelVersion = "stable";
   microsoft-surface.ipts.enable = true;
-  microsoft-surface.surface-control.enable = true;
+  #microsoft-surface.surface-control.enable = true;
   
   hardware.graphics = {
     enable = true;
