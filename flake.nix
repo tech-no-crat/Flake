@@ -65,7 +65,7 @@
           }
         ];
       };
-      surface-book-passive = nixpkgs.lib.nixosSystem {
+      surface-book-passive = nixpkgs-unstable.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs pkgs-unstable; };
         modules = [
