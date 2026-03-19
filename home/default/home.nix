@@ -16,6 +16,7 @@ home.packages = [
     pkgs.ethtool
     pkgs.iw
     pkgs.nextcloud-client
+    pkgs.borgbackup
 
     # --- UNSTABLE PACKAGES (from pkgs-unstable) ---
     pkgs-unstable.discord    # Discord often breaks on stable if not updated

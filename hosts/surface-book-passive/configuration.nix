@@ -7,10 +7,55 @@
     ];
 
   # --- Boot & Hardware ---
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   networking.hostName = "surface-book-passive";
+  hardware.microsoft-surface.kernelVersion = "stable";
+  #microsoft-surface.ipts.enable = true;
+  #hardware.microsoft-surface.surface-control.enable = true;
   
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs-unstable; [
+      intel-media-driver
+      intel-vaapi-driver
+      ];
+  };
+
+  # Load nvidia driver for Xorg and Wayland
+  services.xserver.videoDrivers = ["intel"];
+  
+  #hardware.nvidia = {
+    # Modesetting is required
+  #  modesetting.enable = true;
+    
+    # Enable the NVIDIA settings menu
+  #  nvidiaSettings = true;
+
+    # Use the open source kernel module (Turing+ GPUs)
+   # open = true;
+
+    # Use stable driver
+    #package = config.boot.kernelPackages.nvidiaPackages.stable;
+
+    # PRIME configuration
+    #prime = {
+      # Use "offload" (recommended for laptops) or "sync"
+    #  offload = {
+    #    enable = true;
+    #    enableOffloadCmd = true;
+    #  };
+      
+      # !!! ADJUST THESE BUS IDs !!!
+    #  intelBusId = "PCI:0:2:0";
+    #  nvidiaBusId = "PCI:1:0:0";
+    #};
+
+    # Power management (fine-grained is experimental, disable if it causes issues)
+    #powerManagement.enable = false;
+    #powerManagement.finegrained = false;
+  #};
   # --- Networking ---
   networking.networkmanager.enable = true;
   time.timeZone = "America/New_York";
@@ -30,19 +75,18 @@
   };
 
   # --- Desktop Environment ---
-  services.xserver = {
-    enable = true;
-    displayManager.gdm.enable = true;
-    desktopManager.gnome.enable = true;
-    xkb.layout = "us";
-    xkb.variant = "";
-  };
   
+  # for >25.11
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
+   
   # --- Services ---
   services.printing.enable = true;
-  services.tailscale.enable = true;
+  services.tailscale = {
+  	enable = true;
+  	};
   services.openssh.enable = true;
-  
+
   # Docker (Virtualization)
   virtualisation.docker.enable = true;
 
@@ -61,7 +105,7 @@
     isNormalUser = true;
     description = "Shyam Shukla";
     # Added "docker" group so you don't need sudo for docker commands
-    extraGroups = [ "networkmanager" "wheel" "docker" ]; 
+    extraGroups = [ "networkmanager" "wheel" "docker" "surface-control"]; 
   };
 
   # --- System Programs ---
@@ -76,8 +120,7 @@
 
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "root" "shyam" ];
-
+  nix.settings.trusted-users = [ "root" "shyam"];
   environment.systemPackages = with pkgs; [
     vim
     wget
