@@ -31,7 +31,7 @@
   in {
     nixosConfigurations = {
       # Your Desktop (Existing)
-      nixos = nixpkgs.lib.nixosSystem {
+      nixos = nixpkgs-unstable.lib.nixosSystem {
         inherit system;
         specialArgs = { inherit inputs pkgs-unstable; };
         modules = [

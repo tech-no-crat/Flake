@@ -14,11 +14,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
   boot.initrd.kernelModules = [ "amdgpu" ];
-  boot.kernelParams = [ 
-    "video=DP-1:2560x1440@144"
-    "video=DP-2:2560x1440@144"
-    "amdgpu.vm_fragment_size=9"
-    ];
+#  boot.kernelParams = [ 
+#    "video=DP-1:2560x1440@144"
+#    "video=DP-2:2560x1440@144"
+#    "amdgpu.vm_fragment_size=9"
+#    ];
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.extraModprobeConfig = "options amdgpu ppfeaturemask=0xffffffff\n";
   boot.kernel.sysctl = {
@@ -83,7 +83,7 @@
     isNormalUser = true;
     description = "shyam";
     extraGroups = [ "networkmanager" "wheel" "uinput" "input" "video" ];
-    # Notice: No 'packages' list here! They are all in home.nix now.
+
   };
 
   # --- System Packages ---
