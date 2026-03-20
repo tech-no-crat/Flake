@@ -1,6 +1,6 @@
 { config, pkgs, pkgs-unstable, ... }:
 
-{
+
 {
   # 1. Force the service to use the unstable version
   services.sunshine = {
@@ -25,7 +25,7 @@
       ];
     };
   };
-}
+
   # 2. Add the unstable package to your system environment for manual CLI access
   environment.systemPackages = [
     pkgs-unstable.sunshine
