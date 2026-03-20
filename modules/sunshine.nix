@@ -1,23 +1,22 @@
 { config, pkgs, pkgs-unstable, ... }:
 
-{
-  # 1. Install the package (from Unstable as requested)
-  environment.systemPackages = [
-    pkgs-unstable.sunshine
-  ];
+{{ pkgs, pkgs-unstable, ... }:
 
-  # 2. Service Configuration
+{
+  # 1. Force the service to use the unstable version
   services.sunshine = {
     enable = true;
+    package = pkgs-unstable.sunshine; # This is the key line
     autoStart = true;
-    capSysAdmin = true;
-    openFirewall = true; # This automatically opens standard Sunshine ports
+    capSysAdmin = true; # Required for keyboard/mouse/gamepad emulation
+    openFirewall = true; # Automatically opens 47984, 47989, 47990, 48010 (TCP) & 47998-48000 (UDP)
+    
     applications = {
       apps = [
         {
           name = "SteamBigPicture";
           detached = [ "setsid steam steam://open/bigpicture" ];
-          auto-detach = "true";
+          auto-detach = true; # Fixed: must be a boolean, not a string
           image-path = "steam.png";
         }
         {
@@ -27,17 +26,24 @@
       ];
     };
   };
-  
-  # 3. Systemd wrapper (moved from your original config)
-  systemd.services.sunshine.enable = true;
 
-  # 4. Manual Firewall Rules (Cleaned up from main config)
-  # Note: services.sunshine.openFirewall handles most, but we keep your explicit ranges here to be safe.
-  networking.firewall = {
-    allowedTCPPorts = [ 47984 47989 47990 48010 ];
-    allowedUDPPortRanges = [
-      { from = 47998; to = 48000; }
-      { from = 8000; to = 8010; }
-    ];
-  };
+  # 2. Add the unstable package to your system environment for manual CLI access
+  environment.systemPackages = [
+    pkgs-unstable.sunshine
+  ];
 }
+}
+
+  # 3. Manual Firewall Rules (Only for your custom ranges)
+  #networking.firewall = {
+  #  allowedUDPPortRanges = [
+  #    { from = 8000; to = 8010; }
+  #  ];
+  #};
+  # AIGEN, don't know what this is
+  # 4. Optional but Recommended: uinput rules for controllers
+  # This ensures Sunshine has permission to create virtual input devices
+  #boot.kernelModules = [ "uinput" ];
+  #services.udev.extraRules = ''
+  #  KERNEL=="uinput", GROUP="input", MODE="0660", OPTIONS+="static_node=uinput"
+  #'';
