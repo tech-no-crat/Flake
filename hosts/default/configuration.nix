@@ -89,7 +89,7 @@
     extraGroups = [ "networkmanager" "wheel" "uinput" "input" "video" ];
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKEbiJGuIdNqVYSmU9KPWL/I7/6NVi3guyAlixpg0o2 shyam@surface-book-passive"
-    ]
+    ];
   };
   users.users.borgbackup = {
     isNormalUser = true;
