@@ -26,7 +26,11 @@
   "kernel.perf_cpu_time_max_percent" = 50;
   "vm.max_map_count" = 2147483642;
   };
-
+  fileSystems."/mnt/backup-drive" = {
+    device = "/dev/disk/by-uuid/458e1884-3102-4d69-b005-9e0291cbd23d";
+    fsType = "ext4"; # Or xfs, etc.
+    options = [ "nofail" "defaults" ]; 
+  };
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
@@ -97,7 +101,7 @@
 
   # 3. Create the backup directory with correct permissions
   systemd.tmpfiles.rules = [
-    "/run/media/shyam/458e1884-3102-4d69-b005-9e0291cbd23d/nextcloud-borg-backup-repo 0700 borgbackup borgbackup -"
+    "d /mnt/backup-drive/nextcloud-borg-backup-repo 0700 borgbackup borgbackup -"
   ];
 
   # 4. Optional: Hardening (Restrict the SSH key to only Borg)
