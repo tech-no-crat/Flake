@@ -85,6 +85,27 @@
     extraGroups = [ "networkmanager" "wheel" "uinput" "input" "video" ];
 
   };
+  users.users.borgbackup = {
+    isNormalUser = true;
+    home = "/var/lib/borgbackup";
+    createHome = true;
+    # Paste the public key from your Nextcloud AIO interface here:
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDutRxlBfz7idOa6EN06bDP9bxL8sTGQ0Z6z90"
+    ];
+  };
+
+  # 3. Create the backup directory with correct permissions
+  systemd.tmpfiles.rules = [
+    "/run/media/shyam/458e1884-3102-4d69-b005-9e0291cbd23d/nextcloud-borg-backup-repo 0700 borgbackup borgbackup -"
+  ];
+
+  # 4. Optional: Hardening (Restrict the SSH key to only Borg)
+  # Replace the key in step 2 with this format if you want max security:
+  # openssh.authorizedKeys.keys = [
+  #   "command=\"${pkgs.borgbackup}/bin/borg serve --restrict-to-path /mnt/backups/nextcloud-borg\",restrict ssh-ed25519 AAAAC3..."
+  # ];
+
 
   # --- System Packages ---
   # Only install tools needed by root or for debugging here
