@@ -43,7 +43,7 @@
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
   networking.interfaces.eno1.wakeOnLan.enable = true;
-  networking.interfaces.wlp11s0.wakeOnLan.enable = true;
+  #networking.interfaces.wlp11s0.wakeOnLan.enable = true;
 
   # Firewall: Keep SSH & WoL open. Sunshine ports are handled in modules/sunshine.nix
   networking.firewall.enable = true;
@@ -131,7 +131,7 @@
     btop
     powertop
     lm_sensors
-
+    borgbackup
     
   ];
   
