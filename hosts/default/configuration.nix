@@ -87,7 +87,9 @@
     isNormalUser = true;
     description = "shyam";
     extraGroups = [ "networkmanager" "wheel" "uinput" "input" "video" ];
-
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKEbiJGuIdNqVYSmU9KPWL/I7/6NVi3guyAlixpg0o2 shyam@surface-book-passive"
+    ]
   };
   users.users.borgbackup = {
     isNormalUser = true;
@@ -95,7 +97,6 @@
     createHome = true;
     # Paste the public key from your Nextcloud AIO interface here:
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKEbiJGuIdNqVYSmU9KPWL/I7/6NVi3guyAlixpg0o2 shyam@surface-book-passive"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDutRxlBfz7idOa6EN06bDP9bxL8sTGQ0Z6z90/EnBjz"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICARgR3Z/4HGCgxCoIeAP5F2Owfh1x9wAWvilSia7E3J shyamshukla@Shyams-Mac-mini"
     ];
