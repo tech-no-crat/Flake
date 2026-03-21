@@ -127,5 +127,18 @@
     git
   ];
 
+nix.buildMachines = [
+  {
+    hostName = "192.168.50.160";
+    system = "x86_64-linux";
+    sshUser = "shyam";
+    sshKey = "/home/shyam/.ssh/id_ed25519";
+    maxJobs = 8; 
+    supportedFeatures = [ "nixos-test" "benchmark" "big-parallel" "kvm" ];
+  }
+];
+nix.distributedBuilds = true;
+# Optional: force local builds to fail so you KNOW it's using the remote host
+# nix.settings.builders-use-substitutes = true;
   system.stateVersion = "25.05";
 }
