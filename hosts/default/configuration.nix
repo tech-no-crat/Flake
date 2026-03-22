@@ -69,7 +69,9 @@
   services.displayManager.autoLogin.enable = true;
   services.displayManager.autoLogin.user = "shyam";
   services.lact.enable = true;
-
+  services.udev.extraRules = ''
+  KERNEL=="uinput", MODE="0660", GROUP="input", OPTIONS+="static_node=uinput"
+  '';
   # --- Audio & Printing ---
   services.printing.enable = true;
   services.printing.drivers = [ 
