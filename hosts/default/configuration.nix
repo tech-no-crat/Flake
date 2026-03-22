@@ -13,7 +13,7 @@
   # --- Boot & Hardware ---
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.initrd.kernelModules = [ "uinput" "amdgpu" ];
 #  boot.kernelParams = [ 
 #    "video=DP-1:2560x1440@144"
 #    "video=DP-2:2560x1440@144"
