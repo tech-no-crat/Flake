@@ -1,5 +1,5 @@
 { config, pkgs-unstable, ... }:
 
-{
-pkgs-unstable.nextcloud-talk-desktop
-}
+environment.systemPackages = [
+  pkgs-unstable.nextcloud-talk-desktop
+]
