@@ -22,7 +22,7 @@ home.packages = [
     pkgs-unstable.discord    # Discord often breaks on stable if not updated
     pkgs-unstable.vscode     # Get the latest features/extensions
     pkgs-unstable.neovim     # Often desired for latest plugins
-    pkgs-unstable.nextcloud-talk-desktop
+    
   ];
 
   # Example: Managing Git via Home Manager (Optional but cleaner)
