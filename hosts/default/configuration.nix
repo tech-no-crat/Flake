@@ -8,6 +8,7 @@
       ../../modules/gaming.nix
       ../../modules/multimedia.nix
       ../../modules/1password.nix
+      ../../modules/plex.nix
     ];
 
   # --- Boot & Hardware ---
