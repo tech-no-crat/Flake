@@ -9,7 +9,7 @@
       ../../modules/multimedia.nix
       ../../modules/1password.nix
       ../../modules/plex.nix
-      ../../nctalk.nix
+      ../../modules/nctalk.nix
     ];
 
   # --- Boot & Hardware ---
