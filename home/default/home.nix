@@ -29,8 +29,8 @@ home.packages = [
   programs.direnv.enable = true;
   programs.git.enable = true;
   programs.git.settings = {
-    user.name = "Shyam";
-    user.email = "shuklashyam@outlook.com";
+    user.name = "Tech-no-crat";
+    user.email = "tech-no-crat2526@gmail.com";
   };
 
 

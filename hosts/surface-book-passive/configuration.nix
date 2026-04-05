@@ -6,6 +6,18 @@
       ./hardware-configuration.nix 
     ];
 
+  # --- Nix Configuration ---
+  nix.settings = {
+    trusted-users = [ "root" "shyam" ];
+    secret-key-files = [ "/home/shyam/.config/nix/secret-key" ];
+    trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypf7apZDa8T7nheRbMjGQB7QS0="
+      "nixos:ja/7KdhK9zIWJCUM+FQCHNgUqNExRTNWSDXIkS++ohw="
+      "nixos:fMkk4PAA/Ep6aEEL+zDT4Lv3jalYk0Yl+vJ2cho0+wL4DJElp7hCwOh0fVz5CRrqrVn+oIUZEuegMJSgn8wcDw=="
+    ];
+    require-sigs = false;
+  };
+
   # --- Boot & Hardware ---
 
   boot.loader.systemd-boot.enable = true;
@@ -120,7 +132,6 @@
 
   nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-  nix.settings.trusted-users = [ "root" "shyam"];
   environment.systemPackages = with pkgs; [
     vim
     wget

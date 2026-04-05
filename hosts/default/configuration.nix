@@ -8,8 +8,6 @@
       ../../modules/gaming.nix
       ../../modules/multimedia.nix
       ../../modules/1password.nix
-      ../../modules/plex.nix
-      ../../modules/nctalk.nix
     ];
 
   # --- Boot & Hardware ---
@@ -92,7 +90,7 @@
     description = "shyam";
     extraGroups = [ "networkmanager" "wheel" "uinput" "input" "video" ];
     openssh.authorizedKeys.keys = [
-      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAKEbiJGuIdNqVYSmU9KPWL/I7/6NVi3guyAlixpg0o2 shyam@surface-book-passive"
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmAV4/B3jWOIJPgexSzCDDcK1lb+fD2tzA0i+Lxxgs3 shyam@clerics.ca"
     ];
   };
   users.users.borgbackup = {
@@ -103,6 +101,7 @@
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDutRxlBfz7idOa6EN06bDP9bxL8sTGQ0Z6z90/EnBjz"
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAICARgR3Z/4HGCgxCoIeAP5F2Owfh1x9wAWvilSia7E3J shyamshukla@Shyams-Mac-mini"
+
     ];
   };
 
@@ -145,7 +144,6 @@
   programs.direnv.enable = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   nixpkgs.config.allowUnfree = true;
-  nix.settings.trusted-users = [ "root" "shyam"];
   
   #Garbage Collection
   nix.gc = {
