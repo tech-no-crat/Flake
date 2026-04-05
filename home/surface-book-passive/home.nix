@@ -21,7 +21,11 @@
     # CLI Tools
     _1password-cli 
   ];
-
+  programs.git.enable = true;
+  programs.git.settings = {
+    user.name = "Tech-no-crat";
+    user.email = "tech-no-crat2526@gmail.com";
+  };
   # Allow unfree packages (just in case)
   nixpkgs.config.allowUnfree = true;
 

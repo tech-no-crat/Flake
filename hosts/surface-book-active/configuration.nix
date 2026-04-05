@@ -6,17 +6,6 @@
       ./hardware-configuration.nix 
     ];
 
-  # --- Nix Configuration ---
-  nix.settings = {
-    trusted-users = [ "root" "shyam" ];
-    secret-key-files = [ "/home/shyam/.config/nix/secret-key" ];
-    trusted-public-keys = [
-      "cache.nixos.org-1:6NCHdD59X431o0gWypf7apZDa8T7nheRbMjGQB7QS0="
-      "nixos:ja/7KdhK9zIWJCUM+FQCHNgUqNExRTNWSDXIkS++ohw="
-    ];
-    require-sigs = false;
-  };
-
   # --- Boot & Hardware ---
 
   boot.loader.systemd-boot.enable = true;
@@ -123,6 +112,9 @@
     description = "Shyam Shukla";
     # Added "docker" group so you don't need sudo for docker commands
     extraGroups = [ "networkmanager" "wheel" "docker" "surface-control"]; 
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINmAV4/B3jWOIJPgexSzCDDcK1lb+fD2tzA0i+Lxxgs3 shyam@clerics.ca"
+    ];
   };
 
   # --- System Programs ---
@@ -136,7 +128,6 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
   environment.systemPackages = with pkgs; [
     vim
     wget

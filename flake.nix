@@ -1,6 +1,18 @@
 {
   description = "My Modular NixOS Configuration";
-
+  {
+  nix.settings = {
+    # Allows the specified users to perform privileged Nix operations
+    # like remote builds and binary cache uploads.
+    trusted-users = [ "root" "shyam" ];
+    
+    # Optional: Enable flakes and the new 'nix' command site-wide
+    experimental-features = [ "nix-command" "flakes" ];
+    
+    # Optional: Specify secret key files for signing (if you use this)
+    secret-key-files = [ "/home/shyam/.ssh/id_ed25519"]
+    };
+  };  
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-25.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
