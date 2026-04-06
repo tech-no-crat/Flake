@@ -39,12 +39,10 @@ flake.nix                           # Entry point; declares three nixosConfigura
 │   │   └── home.nix                # Imports ../default + adds laptop packages
 │   └── surface-book-passive/
 │       └── home.nix                # Imports ../default + adds laptop packages
-└── modules/                        # Reusable NixOS modules
-    ├── base.nix                    # Boot, graphics, networking, Firefox, Vim, Wget
+└── modules/                        # Optional reusable NixOS modules (not in hosts/default)
     ├── gnome.nix                   # GNOME desktop, GDM, user setup
     ├── audio.nix                   # PipeWire (desktop, no 32-bit)
     ├── audio-laptop.nix            # PipeWire (laptop, with 32-bit)
-    ├── nix-settings.nix            # Nix config (trusted-users, experimental-features)
     ├── surface-common.nix          # Surface hardware (timezone, localization, docker)
     ├── nvidia-surface.nix          # NVIDIA GPU with PRIME
     ├── intel-surface.nix           # Intel iGPU only
@@ -53,6 +51,10 @@ flake.nix                           # Entry point; declares three nixosConfigura
     ├── multimedia.nix              # GIMP, Blender, OBS
     ├── 1password.nix               # 1Password CLI and GUI
     └── plex.nix                    # Plex media server
+
+Note: Nix settings (trusted-users, experimental-features) and base system config
+(boot, graphics, networking, vim, wget, firefox, garbage collection) are inlined
+in hosts/default/configuration.nix since they're used by all hosts.
 ```
 
 ---
@@ -62,16 +64,20 @@ flake.nix                           # Entry point; declares three nixosConfigura
 ### System Configuration (hosts/)
 
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                    hosts/default/configuration.nix              │
-│                                                                 │
-│  imports = [                                                    │
-│    ../../modules/nix-settings.nix                               │
-│    ../../modules/base.nix                                       │
-│    ../../modules/gnome.nix                                      │
-│  ];                                                             │
-│  # Common boot, graphics, networking, GNOME desktop            │
-└─────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────────────────┐
+│                       hosts/default/configuration.nix                        │
+│                                                                              │
+│  imports = [ ../../modules/gnome.nix ];                                     │
+│                                                                              │
+│  # Inline configuration (always used by all hosts):                         │
+│  nix.settings.trusted-users = [ "root" "shyam" ];                           │
+│  nix.settings.experimental-features = [ "nix-command" "flakes" ];           │
+│  boot.loader.systemd-boot.enable = true;                                   │
+│  hardware.graphics.enable = true;                                          │
+│  networking.networkmanager.enable = true;                                  │
+│  services.openssh.enable = true;                                           │
+│  # ... plus firefox, vim, wget, garbage collection, firewall, etc.         │
+└──────────────────────────────────────────────────────────────────────────────┘
   ▲                           ▲                         ▲
   │                           │                         │
   │ imported by              │ imported by             │ imported by
@@ -92,7 +98,7 @@ flake.nix                           # Entry point; declares three nixosConfigura
 │   = "nixos";        │  │   = "surface-book-   │  │     passive";        │
 │                     │  │   active";           │  │                      │
 │ +Desktop specific:  │  │ +Laptop specific:    │  │ +Intel iGPU config   │
-│  - gaming.nix       │  │  - sony hdmi audio   │  │ +SSH key setup       │
+│  - gaming.nix       │  │  - moonlight support │  │ +SSH keys            │
 │  - sunshine.nix     │  │  - nvidia settings   │  │                      │
 │  - multimedia.nix   │  │  - battery mgmt      │  └──────────────────────┘
 └─────────────────────┘  └──────────────────────┘
@@ -113,29 +119,35 @@ flake.nix                           # Entry point; declares three nixosConfigura
 │      pkgs.neovim                                           │
 │      pkgs.direnv                                           │
 │    ];                                                      │
-│    home.stateVersion = "25.11";                            │
+│    home.stateVersion = "25.05";                            │
 │  }                                                         │
 └────────────────────────────────────────────────────────────┘
   ▲                   ▲                       ▲
   │                   │                       │
-  │ inherited by      │ inherited by          │ inherited by
+  │ imported by      │ imported by           │ imported by
   │                   │                       │
 ┌────────────────┐ ┌──────────────────┐ ┌──────────────────┐
 │ home/nixos/    │ │ home/surface-    │ │ home/surface-    │
 │ home.nix       │ │ book-active/     │ │ book-passive/    │
 ├────────────────┤ │ home.nix         │ │ home.nix         │
-│ imports = [    │ ├──────────────────┤ ├──────────────────┤
-│  ../default    │ │ imports = [      │ │ imports = [      │
-│ ];             │ │  ../default      │ │  ../default      │
-│ home.packages  │ │ ];               │ │ ];               │
-│   ++ [         │ │ home.packages    │ │ home.packages    │
-│   thunderbird  │ │   ++ [           │ │   ++ [           │
-│   discord      │ │   moonlight-qt   │ │   moonlight-qt   │
-│   vscode       │ │   nodejs_24      │ │   nodejs_24      │
-│   ethtool      │ │ ];               │ │   _1password-cli │
-│   iw           │ └──────────────────┘ │ ];               │
-│ ];             │                       └──────────────────┘
+│ imports =      │ ├──────────────────┤ ├──────────────────┤
+│   [ ../default │ │ imports =        │ │ imports =        │
+│     /home.nix];│ │   [ ../default   │ │   [ ../default   │
+│                │ │     /home.nix ];  │ │   /home.nix ];   │
+│ home.packages =│ │                  │ │                  │
+│   lib.mkAfter  │ │ home.packages =  │ │ home.packages =  │
+│   (with pkgs;  │ │   lib.mkAfter    │ │   lib.mkAfter    │
+│       [        │ │   (with pkgs; [  │ │   (with pkgs; [  │
+│  thunderbird   │ │   moonlight-qt   │ │   thunderbird    │
+│  discord       │ │   nodejs_24      │ │ ]);              │
+│  vscode        │ │   thunderbird    │ └──────────────────┘
+│  ethtool       │ │ ]);              │
+│  iw            │ └──────────────────┘
+│ ]);            │
 └────────────────┘
+
+Key: lib.mkAfter pattern properly extends base packages without
+     re-importing, following NixOS module system best practices.
 ```
 
 ---
@@ -171,12 +183,14 @@ flake.nix                           # Entry point; declares three nixosConfigura
 
 6. **Create `home/your-hostname/home.nix`:**
    ```nix
-   { config, pkgs-unstable, ... }:
-   (import ../default/home.nix { inherit config pkgs-unstable; }) // {
-     home.packages = (import ../default/home.nix { inherit config pkgs-unstable; }).home.packages ++ [
+   { config, pkgs, pkgs-unstable, lib, ... }:
+   {
+     imports = [ ../default/home.nix ];
+     
+     home.packages = lib.mkAfter (with pkgs; [
        pkgs-unstable.discord  # Add your desktop-specific packages
        pkgs-unstable.vscode
-     ];
+     ]);
    }
    ```
 
@@ -188,8 +202,8 @@ flake.nix                           # Entry point; declares three nixosConfigura
 ### Intermediate Path
 
 1. **Understand the inheritance chain:**
-   - `hosts/default/configuration.nix` = shared boot, graphics, networking
-   - `hosts/your-hostname/configuration.nix` = imports default + adds your GPU driver, hostname, optional modules
+   - `hosts/default/configuration.nix` = consolidated system baseline (Nix settings, boot, graphics, networking, SSH, Tailscale, common packages)
+   - `hosts/your-hostname/configuration.nix` = imports default + adds your hardware config, hostname, GPU driver, optional modules (audio, gaming, etc.)
    - NixOS merges both during evaluation
 
 2. **Customize by layering:**
@@ -209,15 +223,15 @@ flake.nix                           # Entry point; declares three nixosConfigura
 3. **Create matching home config:**
    ```nix
    # In home/your-hostname/home.nix
-   { config, pkgs-unstable, ... }:
-   let
-     common = import ../default/home.nix { inherit config pkgs-unstable; };
-   in
-   common // {
-     home.packages = common.home.packages ++ [
+   { config, pkgs, pkgs-unstable, lib, ... }:
+   {
+     imports = [ ../default/home.nix ];
+     
+     # Extend packages using lib.mkAfter (idiomatic NixOS pattern)
+     home.packages = lib.mkAfter (with pkgs; [
        pkgs-unstable.discord
        pkgs-unstable.vscode
-     ];
+     ]);
    }
    ```
 
