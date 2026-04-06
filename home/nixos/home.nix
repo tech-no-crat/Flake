@@ -1,10 +1,10 @@
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, pkgs-unstable, lib, ... }:
 
 {
   imports = [ ../default/home.nix ];
 
   # --- Desktop-specific packages ---
-  home.packages = (import ../default/home.nix { inherit config pkgs; }).home.packages ++ (with pkgs; [
+  home.packages = lib.mkAfter (with pkgs; [
     # Communication
     thunderbird
     

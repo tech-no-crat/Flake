@@ -1,20 +1,62 @@
 # hosts/default/configuration.nix
-# Common configuration shared by all NixOS hosts
-{ ... }:
+# Common configuration shared by all NixOS hosts: Nix settings, boot, hardware, networking,
+# core services, and GNOME desktop
+{ config, pkgs, ... }:
 
 {
   imports = [
-    # All hosts share these common modules
-    ../../modules/nix-settings.nix
-    ../../modules/base.nix
+    # GNOME desktop is common to all current hosts
     ../../modules/gnome.nix
     # Note: Audio is host-specific (audio.nix vs audio-laptop.nix)
     # Each host config should import its appropriate audio module
   ];
 
-  # This file provides the baseline configuration.
-  # Host-specific configs (in hosts/*/configuration.nix) should:
-  # 1. Import this file
-  # 2. Add their own hardware configuration
-  # 3. Add their own specific modules (audio, GPU, etc.)
+  # --- Nix Settings ---
+  nix.settings = {
+    # Allows specified users to perform privileged Nix operations
+    trusted-users = [ "root" "shyam" ];
+    
+    # Enable flakes and new nix command
+    experimental-features = [ "nix-command" "flakes" ];
+  };
+
+  # --- Boot & Hardware ---
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # Graphics - baseline (host-specific configs can add more)
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
+  # --- Networking ---
+  networking.networkmanager.enable = true;
+  
+  # Firewall: Keep SSH & WoL open
+  networking.firewall.enable = true;
+  networking.firewall.allowedTCPPorts = [ 22 ];
+  networking.firewall.allowedUDPPorts = [ 9 ];
+
+  # --- Services ---
+  services.openssh.enable = true;
+  services.tailscale.enable = true;
+  services.resolved.enable = true;
+  networking.useNetworkd = false;
+
+  # --- System Packages ---
+  environment.systemPackages = with pkgs; [
+    vim
+    wget
+  ];
+
+  programs.firefox.enable = true;
+  nixpkgs.config.allowUnfree = true;
+
+  # --- Garbage Collection ---
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+  };
 }

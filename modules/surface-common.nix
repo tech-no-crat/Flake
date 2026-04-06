@@ -18,12 +18,9 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # --- Virtualization (Surface-specific) ---
-  virtualisation.docker.enable = true;
-
   # --- User Setup (Extend the gnome.nix user with Surface-specific groups) ---
   users.users.shyam = {
-    extraGroups = [ "docker" "surface-control" ];
+    extraGroups = [ "surface-control" ];
   };
 }
 

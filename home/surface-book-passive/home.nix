@@ -1,12 +1,10 @@
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, pkgs-unstable, lib, ... }:
 
 {
   imports = [ ../default/home.nix ];
 
   # --- Device-specific packages ---
-  home.packages = (import ../default/home.nix { inherit config pkgs pkgs-unstable; }).home.packages ++ (with pkgs; [
-    moonlight-qt
-    nodejs_24
-    _1password-cli
+  home.packages = lib.mkAfter (with pkgs; [
+    thunderbird
   ]);
 }

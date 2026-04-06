@@ -83,8 +83,7 @@
     lm_sensors
     borgbackup
   ];
-
+  virtualisation.docker.enable = true;
   programs.direnv.enable = true;
-
   system.stateVersion = "25.05";
 }
