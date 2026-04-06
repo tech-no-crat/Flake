@@ -7,6 +7,9 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
+  # Suppress Home Manager version check (25.11 on Nixpkgs 26.05 works fine)
+  home.enableNixpkgsReleaseCheck = false;
+
   # --- Common User Packages (shared across all hosts) ---
   home.packages = with pkgs; [
     # Communication / Sync
