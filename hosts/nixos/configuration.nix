@@ -3,15 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    # Common configuration from default
     ../default/configuration.nix
-    # Audio (desktop version without 32-bit support)
-    ../../modules/audio.nix
-    # Host-specific modules
-    ../../modules/sunshine.nix
-    ../../modules/gaming.nix
-    ../../modules/multimedia.nix
-    ../../modules/1password.nix
   ];
 
   # --- Host-specific configuration ---

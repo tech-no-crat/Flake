@@ -3,16 +3,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    # Common configuration from default
     ../default/configuration.nix
-    # Audio (laptop version with 32-bit support)
-    ../../modules/audio-laptop.nix
-    # Surface-specific
-    ../../modules/surface-common.nix
-    # GPU-specific
-    ../../modules/nvidia-surface.nix
-    # Applications
-    ../../modules/1password.nix
   ];
 
   # --- Surface-specific hardware ---

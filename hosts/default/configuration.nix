@@ -1,15 +1,11 @@
 # hosts/default/configuration.nix
 # Common configuration shared by all NixOS hosts: Nix settings, boot, hardware, networking,
-# core services, and GNOME desktop
+# and core services. Module selection (gnome, audio, gaming, etc.) is declared in flake.nix
 { config, pkgs, ... }:
 
 {
-  imports = [
-    # GNOME desktop is common to all current hosts
-    ../../modules/gnome.nix
-    # Note: Audio is host-specific (audio.nix vs audio-laptop.nix)
-    # Each host config should import its appropriate audio module
-  ];
+  # No imports here; all modules are declared in flake.nix per-configuration
+  # This file is the consolidated baseline of system settings
 
   # --- Nix Settings ---
   nix.settings = {
