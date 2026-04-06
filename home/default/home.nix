@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, ... }:
 
 {
   home.username = "shyam";
@@ -7,27 +7,20 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  # --- Shared User Packages ---
+  # --- Common User Packages (shared across all hosts) ---
   home.packages = with pkgs; [
     # Communication / Sync
     nextcloud-client
     
     # Productivity
     obsidian
-    thunderbird
     
     # Development / Tools
     git
-    ethtool
-    iw
     neovim
-    
-    # Unstable packages
-    pkgs-unstable.discord
-    pkgs-unstable.vscode
   ];
 
-  # --- Programs ---
+  # --- Programs (common to all) ---
   programs.direnv.enable = true;
   programs.git.enable = true;
   programs.git.settings = {
