@@ -1,4 +1,4 @@
-# modules/creative.nix
+# modules/multimedia.nix
 { config, pkgs, pkgs-unstable, ... }:
 
 {

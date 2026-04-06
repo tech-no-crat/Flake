@@ -1,31 +1,33 @@
 { config, pkgs, pkgs-unstable, ... }:
 
 {
-  # Basic User Info
   home.username = "shyam";
   home.homeDirectory = "/home/shyam";
-  # Allow unfree packages in Home Manager context
-  nixpkgs.config.allowUnfree = true;
   
-  # --- User Packages (The "Apps") ---
-home.packages = [
-    # --- STABLE PACKAGES (from pkgs) ---
-    pkgs.obsidian
-    pkgs.thunderbird
-    pkgs.git
-    pkgs.ethtool
-    pkgs.iw
-    pkgs.nextcloud-client
+  # Allow unfree packages
+  nixpkgs.config.allowUnfree = true;
 
-
-    # --- UNSTABLE PACKAGES (from pkgs-unstable) ---
-    pkgs-unstable.discord    # Discord often breaks on stable if not updated
-    pkgs-unstable.vscode     # Get the latest features/extensions
-    pkgs-unstable.neovim     # Often desired for latest plugins
+  # --- Shared User Packages ---
+  home.packages = with pkgs; [
+    # Communication / Sync
+    nextcloud-client
     
+    # Productivity
+    obsidian
+    thunderbird
+    
+    # Development / Tools
+    git
+    ethtool
+    iw
+    neovim
+    
+    # Unstable packages
+    pkgs-unstable.discord
+    pkgs-unstable.vscode
   ];
 
-  # Example: Managing Git via Home Manager (Optional but cleaner)
+  # --- Programs ---
   programs.direnv.enable = true;
   programs.git.enable = true;
   programs.git.settings = {
@@ -33,8 +35,5 @@ home.packages = [
     user.email = "tech-no-crat2526@gmail.com";
   };
 
-
-
-  # This version typically matches your system version
   home.stateVersion = "25.05";
 }
