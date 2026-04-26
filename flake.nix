@@ -40,7 +40,7 @@
         configPath = ./hosts/nixos/configuration.nix;
         homeConfigPath = ./home/nixos/home.nix;
         modules = [
-          ./modules/gnome.nix
+          ./modules/hyprland.nix
           ./modules/audio.nix
           ./modules/sunshine.nix
           ./modules/gaming.nix
