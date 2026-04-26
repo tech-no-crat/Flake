@@ -195,22 +195,52 @@
         ", XF86AudioPrev,        exec, playerctl previous"
       ];
 
-      windowrule = [
-        "suppressevent maximize, class:.*"
-        "float, class:^(steam)$, title:^(Steam)$"
-        "float, class:^(1Password)$"
-        "float, class:^(pavucontrol)$"
-        # Enable tearing for games (pairs with allow_tearing = true above)
-        "immediate, class:^(steam_app_.*)$"
-        # Cheat sheet — pinned floating window, bottom-right of DP-2
-        "float,    class:^(hypr-cheatsheet)$"
-        "pin,      class:^(hypr-cheatsheet)$"
-        "size 460 560,   class:^(hypr-cheatsheet)$"
-        "move 4650 870,  class:^(hypr-cheatsheet)$"
-        "nofocus,  class:^(hypr-cheatsheet)$"
-        "noblur,   class:^(hypr-cheatsheet)$"
-      ];
     };
+
+    # Window rules — Hyprland 0.54+ v3 block syntax
+    extraConfig = ''
+      windowrule {
+        name = suppress-maximize
+        match:class = .*
+        suppress_event = maximize
+      }
+
+      windowrule {
+        name = steam-float
+        match:class = ^(steam)$
+        match:title = ^(Steam)$
+        float = true
+      }
+
+      windowrule {
+        name = 1password-float
+        match:class = ^(1Password)$
+        float = true
+      }
+
+      windowrule {
+        name = pavucontrol-float
+        match:class = ^(pavucontrol)$
+        float = true
+      }
+
+      windowrule {
+        name = games-tearing
+        match:class = ^(steam_app_.*)$
+        immediate = true
+      }
+
+      windowrule {
+        name = cheatsheet-float
+        match:class = ^(hypr-cheatsheet)$
+        float = true
+        pin = true
+        size = 460 560
+        move = 4650 870
+        no_focus = true
+        no_blur = true
+      }
+    '';
   };
 
   # ---------------------------------------------------------------------------
