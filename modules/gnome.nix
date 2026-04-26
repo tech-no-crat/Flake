@@ -13,6 +13,11 @@
   services.displayManager.gdm.enable = true;
   services.desktopManager.gnome.enable = true;
 
+  services.displayManager.autoLogin = {
+    enable = true;
+    user = "shyam";
+  };
+
   # --- Audio & Printing ---
   services.printing.enable = true;
   services.printing.drivers = [
