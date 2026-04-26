@@ -48,6 +48,8 @@
         # Pinned cheat sheet — bottom-right of DP-2, visible on all workspaces
         "kitty --class hypr-cheatsheet --hold -e cat /home/shyam/.config/hypr/cheatsheet.txt"
         "code"
+        # Regenerate Sunshine app list (Desktop + Steam Big Picture + 10 recent games)
+        "sunshine-gen-apps"
       ];
 
       env = [
