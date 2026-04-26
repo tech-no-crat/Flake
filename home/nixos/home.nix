@@ -47,6 +47,7 @@
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland"
         # Pinned cheat sheet — bottom-right of DP-2, visible on all workspaces
         "kitty --class hypr-cheatsheet --hold -e cat /home/shyam/.config/hypr/cheatsheet.txt"
+        "code"
       ];
 
       env = [
