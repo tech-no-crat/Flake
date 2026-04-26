@@ -45,6 +45,8 @@
         # prep-cmd scripts can call hyprctl without manually setting the instance sig
         "systemctl --user import-environment WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE XDG_RUNTIME_DIR DBUS_SESSION_BUS_ADDRESS"
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland"
+        # Pinned cheat sheet — bottom-right of DP-2, visible on all workspaces
+        "kitty --class hypr-cheatsheet --hold -e cat /home/shyam/.config/hypr/cheatsheet.txt"
       ];
 
       env = [
@@ -192,16 +194,56 @@
         ", XF86AudioPrev,        exec, playerctl previous"
       ];
 
-      windowrulev2 = [
+      windowrule = [
         "suppressevent maximize, class:.*"
         "float, class:^(steam)$, title:^(Steam)$"
         "float, class:^(1Password)$"
         "float, class:^(pavucontrol)$"
         # Enable tearing for games (pairs with allow_tearing = true above)
         "immediate, class:^(steam_app_.*)$"
+        # Cheat sheet — pinned floating window, bottom-right of DP-2
+        "float,    class:^(hypr-cheatsheet)$"
+        "pin,      class:^(hypr-cheatsheet)$"
+        "size 460 560,   class:^(hypr-cheatsheet)$"
+        "move 4650 870,  class:^(hypr-cheatsheet)$"
+        "nofocus,  class:^(hypr-cheatsheet)$"
+        "noblur,   class:^(hypr-cheatsheet)$"
       ];
     };
   };
+
+  # ---------------------------------------------------------------------------
+  # Hyprland cheat sheet (pinned bottom-right window)
+  # ---------------------------------------------------------------------------
+  home.file.".config/hypr/cheatsheet.txt".text = ''
+    ╔══════════════════════════════════════╗
+    ║         HYPRLAND CHEAT SHEET         ║
+    ╠══════════════════════════════════════╣
+    ║ SUPER + Return     Terminal (kitty)  ║
+    ║ SUPER + R          App launcher      ║
+    ║ SUPER + Q          Close window      ║
+    ║ SUPER + F          Fullscreen        ║
+    ║ SUPER + V          Toggle float      ║
+    ║ SUPER + E          File manager      ║
+    ║ SUPER + Shift + L  Lock screen       ║
+    ║ SUPER + Shift + E  Exit Hyprland     ║
+    ╠══════════════════════════════════════╣
+    ║ SUPER + 1-9        Switch workspace  ║
+    ║ SUPER+Shift + 1-9  Move to workspace ║
+    ╠══════════════════════════════════════╣
+    ║ SUPER + arrows     Move focus        ║
+    ║ SUPER+Shift+arrows Move window       ║
+    ╠══════════════════════════════════════╣
+    ║ SUPER + drag       Move window       ║
+    ║ SUPER + RMB drag   Resize window     ║
+    ╠══════════════════════════════════════╣
+    ║ Print              Screenshot region ║
+    ║ Shift + Print      Screenshot full   ║
+    ╠══════════════════════════════════════╣
+    ║ Workspaces 1-5  →  DP-2 (right)      ║
+    ║ Workspaces 6-9  →  DP-1 (left)       ║
+    ╚══════════════════════════════════════╝
+  '';
 
   # ---------------------------------------------------------------------------
   # Terminal — kitty
