@@ -12,7 +12,7 @@
   services.greetd = {
     enable = true;
     settings.default_session = {
-      command = "${pkgs.hyprland}/bin/Hyprland";
+      command = "${config.programs.hyprland.package}/bin/start-hyprland";
       user = "shyam";
     };
   };
