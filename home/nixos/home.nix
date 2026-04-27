@@ -361,7 +361,6 @@
 
       chosen=$(printf '%s\n' "''${!actions[@]}" | sort | \
         rofi -dmenu -i -p "  Settings" \
-          -theme nord \
           -theme-str 'window {width: 420px;} listview {lines: 6;}')
 
       [[ -n "$chosen" ]] && ''${actions[$chosen]} &
