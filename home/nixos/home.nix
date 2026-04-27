@@ -31,6 +31,12 @@
     blueman         # Bluetooth manager GUI
     baobab          # disk usage analyser
     networkmanagerapplet  # nm-connection-editor for network settings
+
+    # Theming
+    adw-gtk3              # Libadwaita-style GTK3 dark theme
+    papirus-icon-theme    # icon theme with dark variant
+    adwaita-qt            # Adwaita look for Qt5/Qt6 apps
+    adwaita-qt6
   ]);
 
   # ---------------------------------------------------------------------------
@@ -579,5 +585,55 @@
         timeout     = 0;
       };
     };
+  };
+
+  # ---------------------------------------------------------------------------
+  # Dark mode — GTK / Qt / cursor
+  # ---------------------------------------------------------------------------
+
+  # GTK3 — adw-gtk3-dark gives Libadwaita look to legacy GTK3 apps
+  gtk = {
+    enable = true;
+    theme = {
+      name    = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
+    };
+    iconTheme = {
+      name    = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
+    };
+    cursorTheme = {
+      name = "Adwaita";
+      size = 24;
+    };
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
+    gtk4.extraConfig.gtk-application-prefer-dark-theme = true;
+  };
+
+  # dconf — tells GTK4 / libadwaita apps to use dark colour scheme system-wide
+  dconf.settings."org/gnome/desktop/interface" = {
+    color-scheme = "prefer-dark";
+    gtk-theme    = "adw-gtk3-dark";
+    icon-theme   = "Papirus-Dark";
+    cursor-theme = "Adwaita";
+    cursor-size  = 24;
+  };
+
+  # Qt — match Adwaita dark so Qt apps (VLC, etc.) blend in
+  qt = {
+    enable = true;
+    platformTheme.name = "adwaita";
+    style = {
+      name    = "adwaita-dark";
+      package = pkgs.adwaita-qt;
+    };
+  };
+
+  # Session-wide env vars — picked up by any XDG-aware launcher
+  # Note: QT_QPA_PLATFORMTHEME is set automatically by qt.platformTheme
+  home.sessionVariables = {
+    GTK_THEME     = "adw-gtk3-dark";
+    XCURSOR_THEME = "Adwaita";
+    XCURSOR_SIZE  = "24";
   };
 }
