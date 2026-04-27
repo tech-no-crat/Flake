@@ -75,8 +75,6 @@
         # prep-cmd scripts can call hyprctl without manually setting the instance sig
         "systemctl --user import-environment WAYLAND_DISPLAY HYPRLAND_INSTANCE_SIGNATURE XDG_RUNTIME_DIR DBUS_SESSION_BUS_ADDRESS"
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland"
-        # Pinned cheat sheet — bottom-right of DP-2, visible on all workspaces
-        "kitty --class hypr-cheatsheet --hold -e cat /home/shyam/.config/hypr/cheatsheet.txt"
         "code --password-store=gnome-libsecret"
         # Regenerate Sunshine app list (Desktop + Steam Big Picture + 10 recent games)
         # then start Sunshine so it always has the full app list from first connection.
@@ -176,6 +174,7 @@
         "$mod, P, exec, wlogout"
         "$mod SHIFT, A, exec, nwg-drawer"
         "$mod SHIFT, S, exec, ~/.local/bin/settings-hub"
+        "$mod, slash, exec, if hyprctl clients -j | python3 -c \"import sys,json; sys.exit(0 if any(c['class']=='hypr-cheatsheet' for c in json.load(sys.stdin)) else 1)\"; then hyprctl dispatch closewindow class:hypr-cheatsheet; else kitty --class hypr-cheatsheet --hold -e cat ~/.config/hypr/cheatsheet.txt; fi"
 
         # Focus (arrow keys)
         "$mod, left,  movefocus, l"
@@ -313,6 +312,7 @@
     ║ SUPER + P          Power menu        ║
     ║ SUPER + Shift + A  App drawer        ║
     ║ SUPER + Shift + S  Settings hub      ║
+    ║ SUPER + /          Toggle cheatsheet ║
     ╠══════════════════════════════════════╣
     ║ SUPER + 1-9        Switch workspace  ║
     ║ SUPER+Shift + 1-9  Move to workspace ║
