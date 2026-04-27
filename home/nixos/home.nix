@@ -260,7 +260,7 @@
         match:class = ^(wlogout)$
         float = true
         fullscreen = true
-        noanim = true
+        no_anim = true
       }
 
       windowrule {
