@@ -69,15 +69,17 @@ let
 
     # ---- Get top N recently played games ------------------------------------
     def recent_games(n=10):
-        games = []
+        games = {}
         for root in steam_library_roots():
             for manifest in root.glob("appmanifest_*.acf"):
                 d = parse_acf(manifest)
                 lp = int(d.get("LastPlayed", 0))
-                if lp > 0 and "appid" in d and "name" in d:
-                    games.append({"appid": d["appid"], "name": d["name"], "last_played": lp})
-        games.sort(key=lambda g: g["last_played"], reverse=True)
-        return games[:n]
+                appid = d.get("appid")
+                if lp > 0 and appid and "name" in d:
+                    # Keep only the entry with the highest LastPlayed per appid
+                    if appid not in games or lp > games[appid]["last_played"]:
+                        games[appid] = {"appid": appid, "name": d["name"], "last_played": lp}
+        return sorted(games.values(), key=lambda g: g["last_played"], reverse=True)[:n]
 
     # ---- Build app list -----------------------------------------------------
     apps = [

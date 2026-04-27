@@ -180,7 +180,7 @@ journalctl -u sunshine -f
 # Check if Sunshine is running with correct user/PID
 systemctl status sunshine
 ```
-
+fi
 ---
 
 ## Notes for the Future
