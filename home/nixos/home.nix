@@ -235,6 +235,7 @@
 
     # Window rules — Hyprland 0.54+ v3 block syntax
     extraConfig = ''
+
       windowrule {
         name = suppress-maximize
         match:class = .*
