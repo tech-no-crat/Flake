@@ -37,6 +37,11 @@
 
   networking.interfaces.eno1.wakeOnLan.enable = true;
 
+  # Bluetooth
+  hardware.bluetooth.enable = true;
+  hardware.bluetooth.powerOnBoot = true;
+  services.blueman.enable = true;
+
   # Desktop X Server setup (with AMD GPU)
   services.xserver.videoDrivers = [ "amdgpu" ];
 
