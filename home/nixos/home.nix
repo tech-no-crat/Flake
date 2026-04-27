@@ -3,6 +3,20 @@
 {
   imports = [ ../default/home.nix ];
 
+  # GTK apps regenerate their config files as regular files on every login,
+  # which causes Home Manager's link-target check to fail on the next boot.
+  # This activation script removes them before the check runs.
+  home.activation.removeGtkConflicts = lib.hm.dag.entryBefore ["checkLinkTargets"] ''
+    rm -f \
+      "$HOME/.config/gtk-3.0/settings.ini" \
+      "$HOME/.config/gtk-3.0/settings.ini.hm-bak" \
+      "$HOME/.config/gtk-4.0/settings.ini" \
+      "$HOME/.config/gtk-4.0/settings.ini.hm-bak" \
+      "$HOME/.config/gtk-4.0/gtk.css" \
+      "$HOME/.gtkrc-2.0" \
+      "$HOME/.gtkrc-2.0.hm-bak"
+  '';
+
   # --- Desktop-specific packages ---
   home.packages = lib.mkAfter (with pkgs; [
     # Communication
