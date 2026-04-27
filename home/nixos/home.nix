@@ -3,6 +3,18 @@
 {
   imports = [ ../default/home.nix ];
 
+  # Tell VS Code to use 1Password CLI for secret storage (works on both GNOME and Hyprland)
+  home.file.".vscode/argv.json" = {
+    force = true;
+    text = builtins.toJSON {
+      "password-store" = "1password";
+    };
+  };
+
+  # Set the default 1Password account so `op` never prompts for account selection.
+  # Picked up by systemd user session, so GUI apps (VSCode, etc.) inherit it.
+  home.sessionVariables.OP_ACCOUNT = "dayam";
+
   # --- Desktop-specific packages ---
   home.packages = lib.mkAfter (with pkgs; [
     # Communication

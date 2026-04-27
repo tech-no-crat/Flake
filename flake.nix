@@ -29,6 +29,7 @@
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = { inherit inputs pkgs-unstable; };
             home-manager.users.shyam = import homeConfigPath;
+            home-manager.backupFileExtension = "hm-bak";
           }
         ];
       };
