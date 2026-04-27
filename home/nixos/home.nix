@@ -58,6 +58,12 @@
   # ---------------------------------------------------------------------------
   wayland.windowManager.hyprland = {
     enable = true;
+    # hyprexpo (workspace overview, Super+Tab): broken as of 2026-04-26
+    # Hyprland 0.54.3 moved headers; upstream hasn't updated the plugin yet.
+    # Re-enable once nixpkgs-unstable ships a compatible hyprexpo:
+    #   plugins = [ pkgs-unstable.hyprlandPlugins.hyprexpo ];
+    # Also uncomment in bind: "$mod, Tab, hyprexpo:expo, toggle"
+    # Also uncomment in extraConfig: plugin { hyprexpo { ... } }
     settings = {
 
       monitor = [
