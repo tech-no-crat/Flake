@@ -112,7 +112,9 @@ in
   services.sunshine = {
     enable = true;
     package = pkgs-unstable.sunshine;
-    autoStart = true;
+    # autoStart disabled — Hyprland exec-once generates apps.json first,
+    # then starts Sunshine so it always has the full app list on first boot.
+    autoStart = false;
     capSysAdmin = true;
     openFirewall = true;
 

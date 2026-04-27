@@ -79,8 +79,8 @@
         "kitty --class hypr-cheatsheet --hold -e cat /home/shyam/.config/hypr/cheatsheet.txt"
         "code --password-store=gnome-libsecret"
         # Regenerate Sunshine app list (Desktop + Steam Big Picture + 10 recent games)
-        # then restart Sunshine so it picks up the new apps.json immediately
-        "bash -c 'sunshine-gen-apps && systemctl --user restart sunshine'"
+        # then start Sunshine so it always has the full app list from first connection.
+        "bash -c 'sunshine-gen-apps && systemctl --user start sunshine'"
       ];
 
       env = [
