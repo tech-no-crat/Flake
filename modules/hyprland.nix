@@ -32,6 +32,10 @@
     wl-clipboard
   ];
 
+  # gvfs: GNOME virtual filesystem — enables Nautilus network browsing (SMB,
+  # NFS, MTP, etc.) and the "Connect to Server" dialog.
+  services.gvfs.enable = true;
+
   # --- Carried over from gnome.nix ---
 
   services.printing.enable = true;
