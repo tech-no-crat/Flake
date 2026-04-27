@@ -23,6 +23,14 @@
     nautilus        # file manager
     playerctl       # media key support
     brightnessctl   # brightness control
+
+    # Desktop shell extras
+    wlogout         # power menu
+    nwg-drawer      # GNOME-style app launcher grid
+    nwg-look        # GTK theming / appearance settings
+    blueman         # Bluetooth manager GUI
+    baobab          # disk usage analyser
+    networkmanagerapplet  # nm-connection-editor for network settings
   ]);
 
   # ---------------------------------------------------------------------------
@@ -142,6 +150,9 @@
         "$mod, F, fullscreen"
         "$mod, R, exec, rofi -show drun"
         "$mod SHIFT, L, exec, hyprlock"
+        "$mod, P, exec, wlogout"
+        "$mod SHIFT, A, exec, nwg-drawer"
+        "$mod SHIFT, S, exec, ~/.local/bin/settings-hub"
 
         # Focus (arrow keys)
         "$mod, left,  movefocus, l"
@@ -243,6 +254,21 @@
         no_focus = true
         no_blur = true
       }
+
+      windowrule {
+        name = wlogout-fullscreen
+        match:class = ^(wlogout)$
+        float = true
+        fullscreen = true
+        noanim = true
+      }
+
+      windowrule {
+        name = nwg-drawer-float
+        match:class = ^(nwg-drawer)$
+        float = true
+        center = true
+      }
     '';
   };
 
@@ -261,6 +287,9 @@
     ║ SUPER + E          File manager      ║
     ║ SUPER + Shift + L  Lock screen       ║
     ║ SUPER + Shift + E  Exit Hyprland     ║
+    ║ SUPER + P          Power menu        ║
+    ║ SUPER + Shift + A  App drawer        ║
+    ║ SUPER + Shift + S  Settings hub      ║
     ╠══════════════════════════════════════╣
     ║ SUPER + 1-9        Switch workspace  ║
     ║ SUPER+Shift + 1-9  Move to workspace ║
@@ -297,8 +326,111 @@
   # App launcher — rofi (Wayland fork)
   # ---------------------------------------------------------------------------
   programs.rofi = {
-    enable = true; # rofi-wayland merged into rofi as of nixpkgs 2025-09
+    enable = true;
+    extraConfig = {
+      modi = "drun,run";
+      icon-theme = "Papirus";
+      show-icons = true;
+      drun-display-format = "{name}";
+      disable-history = false;
+      hide-scrollbar = true;
+      display-drun = "  Apps";
+    };
+    theme = "nord";
   };
+
+  # Settings hub — rofi script that presents categorised settings launchers
+  home.file.".local/bin/settings-hub" = {
+    executable = true;
+    text = ''
+      #!/usr/bin/env bash
+      declare -A actions
+      actions=(
+        ["󰔄  Appearance (GTK)"]="nwg-look"
+        ["󰕾  Audio"]="pavucontrol"
+        ["󰂯  Bluetooth"]="blueman-manager"
+        ["󰩟  Network"]="nm-connection-editor"
+        ["󰋊  Disk Usage"]="baobab"
+      )
+
+      chosen=$(printf '%s\n' "''${!actions[@]}" | sort | \
+        rofi -dmenu -i -p "  Settings" \
+          -theme nord \
+          -theme-str 'window {width: 420px;} listview {lines: 6;}')
+
+      [[ -n "$chosen" ]] && ''${actions[$chosen]} &
+    '';
+  };
+
+  # ---------------------------------------------------------------------------
+  # Power menu — wlogout
+  # ---------------------------------------------------------------------------
+  home.file.".config/wlogout/layout".text = ''
+    {
+        "label" : "lock",
+        "action" : "hyprlock",
+        "text" : "Lock",
+        "keybind" : "l"
+    }
+    {
+        "label" : "logout",
+        "action" : "hyprctl dispatch exit",
+        "text" : "Logout",
+        "keybind" : "e"
+    }
+    {
+        "label" : "suspend",
+        "action" : "systemctl suspend",
+        "text" : "Suspend",
+        "keybind" : "u"
+    }
+    {
+        "label" : "reboot",
+        "action" : "systemctl reboot",
+        "text" : "Reboot",
+        "keybind" : "r"
+    }
+    {
+        "label" : "shutdown",
+        "action" : "systemctl poweroff",
+        "text" : "Shutdown",
+        "keybind" : "s"
+    }
+  '';
+
+  home.file.".config/wlogout/style.css".text = ''
+    * {
+      background-image: none;
+      box-shadow: none;
+    }
+    window {
+      background-color: rgba(18, 18, 28, 0.9);
+    }
+    button {
+      color: #cdd6f4;
+      background-color: rgba(30, 30, 46, 0.7);
+      border-style: solid;
+      border-width: 2px;
+      border-color: rgba(137, 180, 250, 0.2);
+      border-radius: 12px;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: 40%;
+      font-size: 18px;
+      font-weight: bold;
+      margin: 20px;
+    }
+    button:focus, button:active, button:hover {
+      background-color: rgba(137, 180, 250, 0.25);
+      border-color: #89b4fa;
+      outline-style: none;
+    }
+    #lock     { background-image: image(url("/run/current-system/sw/share/wlogout/icons/lock.png")); }
+    #logout   { background-image: image(url("/run/current-system/sw/share/wlogout/icons/logout.png")); }
+    #suspend  { background-image: image(url("/run/current-system/sw/share/wlogout/icons/suspend.png")); }
+    #reboot   { background-image: image(url("/run/current-system/sw/share/wlogout/icons/reboot.png")); }
+    #shutdown { background-image: image(url("/run/current-system/sw/share/wlogout/icons/shutdown.png")); }
+  '';
 
   # ---------------------------------------------------------------------------
   # Status bar — Waybar (on DP-2 only)
