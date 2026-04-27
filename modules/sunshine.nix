@@ -104,7 +104,7 @@ let
         })
 
     APPS_JSON.parent.mkdir(parents=True, exist_ok=True)
-    APPS_JSON.write_text(json.dumps({"apps": apps}, indent=2))
+    APPS_JSON.write_text(json.dumps({"env": {}, "apps": apps}, indent=2))
     print(f"sunshine-gen-apps: wrote {len(apps)} apps to {APPS_JSON}", flush=True)
   '';
 in
