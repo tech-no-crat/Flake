@@ -36,6 +36,11 @@
 
   # --- Services ---
   services.openssh.enable = true;
+
+  # GNOME Keyring — provides a libsecret daemon that runs independently of GNOME.
+  # VS Code and other apps use it to persist secrets under Hyprland.
+  # A keyring with an empty password auto-unlocks without needing PAM integration.
+  services.gnome.gnome-keyring.enable = true;
   services.tailscale.enable = true;
   services.resolved.enable = true;
   networking.useNetworkd = false;

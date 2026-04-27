@@ -3,18 +3,6 @@
 {
   imports = [ ../default/home.nix ];
 
-  # Tell VS Code to use 1Password CLI for secret storage (works on both GNOME and Hyprland)
-  home.file.".vscode/argv.json" = {
-    force = true;
-    text = builtins.toJSON {
-      "password-store" = "1password";
-    };
-  };
-
-  # Set the default 1Password account so `op` never prompts for account selection.
-  # Picked up by systemd user session, so GUI apps (VSCode, etc.) inherit it.
-  home.sessionVariables.OP_ACCOUNT = "dayam";
-
   # --- Desktop-specific packages ---
   home.packages = lib.mkAfter (with pkgs; [
     # Communication
@@ -65,6 +53,8 @@
 
       # Run on session start
       exec-once = [
+        # gnome-keyring is managed by the systemd user service (services.gnome.gnome-keyring.enable).
+        # It auto-unlocks on session start when the keyring has an empty password.
         "waybar"
         "dunst"
         # Export Hyprland env vars into the systemd user session so Sunshine
@@ -73,7 +63,7 @@
         "dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland"
         # Pinned cheat sheet — bottom-right of DP-2, visible on all workspaces
         "kitty --class hypr-cheatsheet --hold -e cat /home/shyam/.config/hypr/cheatsheet.txt"
-        "code"
+        "code --password-store=gnome-libsecret"
         # Regenerate Sunshine app list (Desktop + Steam Big Picture + 10 recent games)
         # then restart Sunshine so it picks up the new apps.json immediately
         "bash -c 'sunshine-gen-apps && systemctl --user restart sunshine'"
@@ -93,6 +83,7 @@
         follow_mouse = 1;
         sensitivity = 0;
         accel_profile = "flat";
+        numlock_by_default = true;
       };
 
       general = {
@@ -356,6 +347,58 @@
     };
     theme = "nord";
   };
+
+  # Nord theme for rofi — rofi-wayland doesn't bundle third-party themes
+  home.file.".local/share/rofi/themes/nord.rasi".text = ''
+    * {
+      background-color: #2E3440;
+      border-color:     #4C566A;
+      text-color:       #D8DEE9;
+      spacing:          0;
+    }
+    window {
+      width:            512px;
+      border:           1px;
+      border-color:     #4C566A;
+      border-radius:    8px;
+      padding:          0;
+    }
+    mainbox {
+      children: [ inputbar, listview ];
+    }
+    inputbar {
+      border:    0 0 1px 0;
+      children:  [ prompt, entry ];
+    }
+    prompt {
+      padding:   12px 16px;
+      border:    0 1px 0 0;
+      text-color: #81A1C1;
+    }
+    entry {
+      padding:   12px 16px;
+    }
+    listview {
+      lines:     8;
+      padding:   6px 0;
+      scrollbar: false;
+    }
+    element {
+      padding:   8px 16px;
+      spacing:   8px;
+      children:  [ element-icon, element-text ];
+    }
+    element selected {
+      background-color: #3B4252;
+      border-radius:    4px;
+    }
+    element-icon {
+      size:   1.2em;
+    }
+    element-text {
+      vertical-align: 0.5;
+    }
+  '';
 
   # Settings hub — rofi script that presents categorised settings launchers
   home.file.".local/bin/settings-hub" = {
