@@ -100,7 +100,8 @@ let
     for g in recent_games():
         apps.append({
             "name": g["name"],
-            "cmd": f"steam steam://rungameid/{g['appid']}",
+            "detached": [f"steam steam://rungameid/{g['appid']}"],
+            "auto-detach": True,
             "image-path": f"https://cdn.akamai.steamstatic.com/steam/apps/{g['appid']}/header.jpg",
             "prep-cmd": prep_cmd,
         })
