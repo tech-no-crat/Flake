@@ -1,4 +1,4 @@
-{ config, pkgs, pkgs-unstable, ... }:
+{ config, pkgs, pkgs-unstable, lib, ... }:
 
 {
   imports = [
@@ -83,4 +83,23 @@
   virtualisation.docker.enable = true;
   programs.direnv.enable = true;
   system.stateVersion = "25.05";
+
+  # ---------------------------------------------------------------------------
+  # Specialisation: GNOME fallback — selectable from the boot menu
+  # Inherits all hardware/services above; swaps Hyprland's greetd for GDM.
+  # ---------------------------------------------------------------------------
+  specialisation.gnome.configuration = {
+    # Disable Hyprland's greetd autologin
+    services.greetd.enable = lib.mkForce false;
+
+    # Enable GDM + GNOME
+    services.xserver.enable = true;
+    services.xserver.xkb.layout = "us";
+    services.displayManager.gdm.enable = true;
+    services.desktopManager.gnome.enable = true;
+    services.displayManager.autoLogin = {
+      enable = true;
+      user = "shyam";
+    };
+  };
 }
