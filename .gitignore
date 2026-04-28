@@ -1,0 +1,10 @@
+# Nix build artifacts
+result
+result-*
+
+# Logs
+*.log
+
+# Editor / OS
+.direnv/
+.DS_Store

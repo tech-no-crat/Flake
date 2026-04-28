@@ -1,4 +1,5 @@
 # modules/gaming.nix
+# Steam, Proton/proton-ge, gamemode, DXVK, and related gaming tooling.
 { config, pkgs, pkgs-unstable, ... }:
 
 {

@@ -1,4 +1,5 @@
 # modules/multimedia.nix
+# Creative apps: GIMP, Blender, OBS, etc. Pure package list, no services.
 { config, pkgs, pkgs-unstable, ... }:
 
 {

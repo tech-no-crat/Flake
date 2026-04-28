@@ -1,3 +1,6 @@
+# modules/sunshine.nix
+# Sunshine game-streaming host (Moonlight server) plus the gen-apps helper that
+# rebuilds Sunshine's apps.json from the Steam library on login.
 { config, pkgs, pkgs-unstable, ... }:
 
 let
