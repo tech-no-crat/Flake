@@ -18,6 +18,7 @@
 
   # --- Boot & Hardware ---
   boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.configurationLimit = 10; # Keep last 10 generations in boot menu
   boot.loader.efi.canTouchEfiVariables = true;
 
   # Graphics - baseline (host-specific configs can add more)
